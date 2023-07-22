@@ -1,6 +1,7 @@
 {
   "Routes": [
     {
+      "ServiceName": "SERVICEONE",
       "DownstreamPathTemplate": "/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
@@ -17,9 +18,15 @@
         "PUT",
         "DELETE",
         "OPTIONS"
-      ]
+      ],
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin",
+        "Key": null,
+        "Expiry": 0
+      }
     },
     {
+      "ServiceName": "SERVICETWO",
       "DownstreamPathTemplate": "/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
@@ -36,9 +43,15 @@
         "PUT",
         "DELETE",
         "OPTIONS"
-      ]
+      ],
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin",
+        "Key": null,
+        "Expiry": 0
+      }
     },
     {
+      "ServiceName": "SERVICETHREE",
       "DownstreamPathTemplate": "/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
@@ -55,8 +68,23 @@
         "PUT",
         "DELETE",
         "OPTIONS"
-      ]
+      ],
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin",
+        "Key": null,
+        "Expiry": 0
+      }
     }
   ],
-  "GlobalConfiguration": {}
+  "GlobalConfiguration": {
+    "RequestIdKey": "OcRequestId",
+    "DownstreamScheme": "http",
+    "ReRoutesCaseSensitive": false,
+    "UseServiceDiscovery": true,
+    "ServiceDiscoveryProvider": {
+      "Host": "localhost",
+      "Port": 5015,
+      "Type": "Eureka"
+    }
+  }
 }

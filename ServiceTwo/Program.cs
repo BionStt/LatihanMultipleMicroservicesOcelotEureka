@@ -1,7 +1,10 @@
+using Microsoft.Extensions.Configuration;
 using Serilog;
 using Serilog.Exceptions;
 using Serilog.Sinks.Elasticsearch;
 using ServiceCore.Middleware;
+using Steeltoe.Discovery.Client;
+using Steeltoe.Discovery.Eureka;
 using System.Reflection;
 
 Log.Logger = new LoggerConfiguration()
@@ -38,6 +41,9 @@ try
 
 
     // Add services to the container.
+    //builder.Services.AddDiscoveryClient(builder.Configuration);
+    builder.Services.AddServiceDiscovery(o => o.UseEureka());
+
     builder.Services.AddControllers();
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
@@ -59,6 +65,8 @@ try
     app.UseMiddleware<ExceptionMiddleware>();
 
     app.UseHttpsRedirection();
+
+    //app.UseDiscoveryClient();
 
     app.UseAuthorization();
 

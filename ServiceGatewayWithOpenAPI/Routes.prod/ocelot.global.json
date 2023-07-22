@@ -1,12 +1,12 @@
 {
   "GlobalConfiguration": {
-    "BaseUrl": "http://localhost:5178",
+    //"BaseUrl": "http://localhost:5178",
     "RequestIdKey": "OcRequestId",
     "DownstreamScheme": "http",
     "UseServiceDiscovery": true,
     "ServiceDiscoveryProvider": {
-      "Host": "localhost",
-      "Port": 5178,
+      "Host": "ServiceGatewayWithOpenAPI",
+      "Port": 80,
       "Type": "Eureka"
     }
   }

@@ -1,12 +1,13 @@
 {
   "Routes": [
     {
+      "ServiceName": "serviceone",
       "DownstreamPathTemplate": "/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "serviceone",
-          "Port": 80
+          "Port": 5256
         }
       ],
       "UpstreamPathTemplate": "/serviceone/{everything}",
@@ -16,15 +17,22 @@
         "PUT",
         "DELETE",
         "OPTIONS"
-      ]
+      ],
+      "FileCacheOptions": {
+        "TtlSeconds": 15
+      },
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      }
     },
     {
+      "ServiceName": "servicetwo",
       "DownstreamPathTemplate": "/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "servicetwo",
-          "Port": 80
+          "Port": 5258
         }
       ],
       "UpstreamPathTemplate": "/servicetwo/{everything}",
@@ -34,15 +42,22 @@
         "PUT",
         "DELETE",
         "OPTIONS"
-      ]
+      ],
+      "FileCacheOptions": {
+        "TtlSeconds": 15
+      },
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      }
     },
     {
+      "ServiceName": "servicethree",
       "DownstreamPathTemplate": "/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "servicethree",
-          "Port": 80
+          "Port": 5172
         }
       ],
       "UpstreamPathTemplate": "/servicethree/{everything}",
@@ -52,8 +67,24 @@
         "PUT",
         "DELETE",
         "OPTIONS"
-      ]
+      ],
+      "FileCacheOptions": {
+        "TtlSeconds": 15
+      },
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      }
     }
   ],
-  "GlobalConfiguration": {}
+  "GlobalConfiguration": {
+    "RequestIdKey": "OcRequestId",
+    "DownstreamScheme": "http",
+    "ReRoutesCaseSensitive": false,
+    "UseServiceDiscovery": true,
+    "ServiceDiscoveryProvider": {
+      "Host": "localhost",
+      "Port": 5015,
+      "Type": "Eureka"
+    }
+  }
 }

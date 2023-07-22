@@ -31,16 +31,16 @@
         "Region": null
       },
       "RouteIsCaseSensitive": false,
-      "ServiceName": null,
+      "ServiceName": "ServiceOne",
       "ServiceNamespace": null,
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "QoSOptions": {
         "ExceptionsAllowedBeforeBreaking": 0,
         "DurationOfBreak": 0,
         "TimeoutValue": 0
       },
       "LoadBalancerOptions": {
-        "Type": null,
+        "Type": "RoundRobin",
         "Key": null,
         "Expiry": 0
       },
@@ -116,16 +116,16 @@
         "Region": null
       },
       "RouteIsCaseSensitive": false,
-      "ServiceName": null,
+      "ServiceName": "ServiceThree",
       "ServiceNamespace": null,
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "QoSOptions": {
         "ExceptionsAllowedBeforeBreaking": 0,
         "DurationOfBreak": 0,
         "TimeoutValue": 0
       },
       "LoadBalancerOptions": {
-        "Type": null,
+        "Type": "RoundRobin",
         "Key": null,
         "Expiry": 0
       },
@@ -201,16 +201,16 @@
         "Region": null
       },
       "RouteIsCaseSensitive": false,
-      "ServiceName": null,
+      "ServiceName": "ServiceTwo",
       "ServiceNamespace": null,
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "QoSOptions": {
         "ExceptionsAllowedBeforeBreaking": 0,
         "DurationOfBreak": 0,
         "TimeoutValue": 0
       },
       "LoadBalancerOptions": {
-        "Type": null,
+        "Type": "RoundRobin",
         "Key": null,
         "Expiry": 0
       },
@@ -261,12 +261,12 @@
   "Aggregates": [
   ],
   "GlobalConfiguration": {
-    "RequestIdKey": null,
+    "RequestIdKey": "OcRequestId",
     "ServiceDiscoveryProvider": {
       "Scheme": null,
-      "Host": null,
-      "Port": 0,
-      "Type": null,
+      "Host": "localhost",
+      "Port": 5178,
+      "Type": "Eureka",
       "Token": null,
       "ConfigurationKey": null,
       "PollingInterval": 0,
@@ -290,7 +290,7 @@
       "Key": null,
       "Expiry": 0
     },
-    "DownstreamScheme": null,
+    "DownstreamScheme": "http",
     "HttpHandlerOptions": {
       "AllowAutoRedirect": false,
       "UseCookieContainer": false,

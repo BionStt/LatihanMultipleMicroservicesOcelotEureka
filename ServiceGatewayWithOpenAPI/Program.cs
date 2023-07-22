@@ -6,10 +6,13 @@ using Newtonsoft.Json;
 using Ocelot.Cache.CacheManager;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
+using Ocelot.Provider.Eureka;
 using Ocelot.Provider.Polly;
 using Serilog;
 using ServiceGatewayWithOpenAPI.Config;
 using ServiceGatewayWithOpenAPI.StartupExtension;
+using Steeltoe.Discovery.Client;
+using Steeltoe.Discovery.Eureka;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console().CreateBootstrapLogger();
@@ -41,6 +44,13 @@ try
     var routes = "Routes";
     var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
+    #if DEBUG
+        routes = "Routes";
+    #else
+    routes = "Routes.prod";
+    #endif
+        ;
+
     //var config = new ConfigurationBuilder()
     //    .SetBasePath(Directory.GetCurrentDirectory())
     //    //.AddJsonFile("appsettings.json")
@@ -57,6 +67,10 @@ try
     //    //.AddOcelot(routes, builder.Environment)
     //    .AddEnvironmentVariables()
     //    .Build();
+    
+    
+    // Register service discovery - Eureka
+    builder.Services.AddServiceDiscovery(o => o.UseEureka());
 
     builder.Configuration
         .SetBasePath(Directory.GetCurrentDirectory())
@@ -76,6 +90,7 @@ try
 
     builder.Services
         .AddOcelot(builder.Configuration)
+        .AddEureka()
         .AddPolly()
         .AddCacheManager(x =>
         {

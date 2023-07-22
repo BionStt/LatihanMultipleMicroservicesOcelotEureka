@@ -24,7 +24,7 @@
         "Region": null
       },
       "RouteIsCaseSensitive": false,
-      "ServiceName": null,
+      "ServiceName": "SERVICEONE",
       "ServiceNamespace": null,
       "DownstreamScheme": "http",
       "QoSOptions": {
@@ -33,7 +33,7 @@
         "TimeoutValue": 0
       },
       "LoadBalancerOptions": {
-        "Type": null,
+        "Type": "RoundRobin",
         "Key": null,
         "Expiry": 0
       },
@@ -56,10 +56,10 @@
         "MaxConnectionsPerServer": 2147483647
       },
       "DownstreamHostAndPorts": [
-        {
-          "Host": "serviceone",
-          "Port": 80
-        }
+        //{
+        //  "Host": "serviceone",
+        //  "Port": 80
+        //}
       ],
       "UpstreamHost": null,
       "Key": null,
@@ -97,7 +97,7 @@
         "Region": null
       },
       "RouteIsCaseSensitive": false,
-      "ServiceName": null,
+      "ServiceName": "SERVICETWO",
       "ServiceNamespace": null,
       "DownstreamScheme": "http",
       "QoSOptions": {
@@ -106,7 +106,7 @@
         "TimeoutValue": 0
       },
       "LoadBalancerOptions": {
-        "Type": null,
+        "Type": "RoundRobin",
         "Key": null,
         "Expiry": 0
       },
@@ -129,10 +129,10 @@
         "MaxConnectionsPerServer": 2147483647
       },
       "DownstreamHostAndPorts": [
-        {
-          "Host": "servicetwo",
-          "Port": 80
-        }
+        //{
+        //  "Host": "servicetwo",
+        //  "Port": 80
+        //}
       ],
       "UpstreamHost": null,
       "Key": null,
@@ -170,7 +170,7 @@
         "Region": null
       },
       "RouteIsCaseSensitive": false,
-      "ServiceName": null,
+      "ServiceName": "SERVICETHREE",
       "ServiceNamespace": null,
       "DownstreamScheme": "http",
       "QoSOptions": {
@@ -179,7 +179,7 @@
         "TimeoutValue": 0
       },
       "LoadBalancerOptions": {
-        "Type": null,
+        "Type": "RoundRobin",
         "Key": null,
         "Expiry": 0
       },
@@ -202,10 +202,10 @@
         "MaxConnectionsPerServer": 2147483647
       },
       "DownstreamHostAndPorts": [
-        {
-          "Host": "servicethree",
-          "Port": 80
-        }
+        //{
+        //  "Host": "servicethree",
+        //  "Port": 80
+        //}
       ],
       "UpstreamHost": null,
       "Key": null,
@@ -223,12 +223,12 @@
   "DynamicRoutes": [],
   "Aggregates": [],
   "GlobalConfiguration": {
-    "RequestIdKey": null,
+    "RequestIdKey": "OcRequestId",
     "ServiceDiscoveryProvider": {
       "Scheme": null,
-      "Host": null,
-      "Port": 0,
-      "Type": null,
+      "Host": "servicegatewaywithopenapi",
+      "Port": 80,
+      "Type": "Eureka",
       "Token": null,
       "ConfigurationKey": null,
       "PollingInterval": 0,
@@ -246,7 +246,8 @@
       "DurationOfBreak": 0,
       "TimeoutValue": 0
     },
-    "BaseUrl": "http://localhost:5178",
+    //"BaseUrl": "http://localhost:5178",
+    "BaseUrl": "",
     "LoadBalancerOptions": {
       "Type": null,
       "Key": null,

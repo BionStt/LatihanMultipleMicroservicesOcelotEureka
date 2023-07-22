@@ -2,6 +2,9 @@ using Serilog;
 using ServiceCore.Middleware;
 using System.Reflection;
 using ServiceThree.StartupExtension;
+using Microsoft.Extensions.Configuration;
+using Steeltoe.Discovery.Client;
+using Steeltoe.Discovery.Eureka;
 
 
 Log.Logger = new LoggerConfiguration()
@@ -31,7 +34,7 @@ try
     // Add services to the container.
 
     #region belajar configuration
-   
+
     var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
     var config = new ConfigurationBuilder()
@@ -52,6 +55,10 @@ try
     builder.Services.AddCors();
     builder.Services.AddHttpContextAccessor();
     builder.Services.AddRouting(options => options.LowercaseUrls = true);
+
+    //builder.Services.AddDiscoveryClient(builder.Configuration);
+    builder.Services.AddServiceDiscovery(o => o.UseEureka());
+
 
     builder.Services.AddControllers();
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -78,6 +85,8 @@ try
     app.UseHttpsRedirection();
 
     app.UseStaticFiles();
+
+    //app.UseDiscoveryClient();
 
     app.UseAuthorization();
 

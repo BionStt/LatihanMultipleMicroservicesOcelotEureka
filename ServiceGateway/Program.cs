@@ -18,6 +18,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Ocelot.Provider.Eureka;
+using System.Configuration;
+using Steeltoe.Discovery.Client;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console().CreateBootstrapLogger();
@@ -75,11 +78,14 @@ try
     //builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
 
     builder.Services.AddOcelot(config)
+        .AddEureka()
         .AddPolly()
         .AddCacheManager(x =>
         {
             x.WithDictionaryHandle();
         });
+
+    builder.Services.AddDiscoveryClient(builder.Configuration);
 
     builder.Services.AddHttpContextAccessor();
     builder.Services.AddRouting(options => options.LowercaseUrls = true);
@@ -115,6 +121,8 @@ try
         context.Response.ContentType = "application/json";
         await context.Response.WriteAsync(result);
     }));
+    
+    app.UseDiscoveryClient();
 
     app.UseHttpsRedirection();
 

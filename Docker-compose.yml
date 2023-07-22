@@ -1,6 +1,16 @@
 version: '3.6'
 
 services:
+    eureka-serverforloggingmicroservice:
+        container_name: eureka-serverforloggingmicroservice
+        image: steeltoeoss/eurekaserver:latest
+        restart: on-failure
+        hostname: eureka-server
+        networks:
+          - common_network
+        #ports:
+        # - "8761:8761"
+
     # Elasticsearch Docker Images: https://www.docker.elastic.co/
     elasticsearchforloggingmicroservice:
         container_name: elasticsearchforloggingmicroservice

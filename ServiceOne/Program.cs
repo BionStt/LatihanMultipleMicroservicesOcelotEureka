@@ -1,8 +1,11 @@
 
 
+using Microsoft.Extensions.Configuration;
 using Serilog;
 using ServiceCore.Middleware;
 using ServiceOne.LoggingExtension;
+using Steeltoe.Discovery.Client;
+using Steeltoe.Discovery.Eureka;
 using System.Reflection;
 
 
@@ -93,6 +96,9 @@ try
     builder.Services.AddHttpContextAccessor();
     builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
+    builder.Services.AddServiceDiscovery(o => o.UseEureka());
+    //builder.Services.AddDiscoveryClient(builder.Configuration);
+    
     builder.Services.AddControllers();
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
@@ -117,6 +123,8 @@ try
     app.UseHttpsRedirection();
 
     app.UseStaticFiles();
+    
+    //app.UseDiscoveryClient();
 
     app.UseAuthorization();
 

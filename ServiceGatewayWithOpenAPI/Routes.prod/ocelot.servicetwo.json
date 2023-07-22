@@ -27,7 +27,6 @@
         NoLoadBalancer - takes the first available service from config or service discovery.
         CookieStickySessions - uses a cookie to stick all requests to a specific server
       */
-
       "LoadBalancerOptions": {
         "Type": "RoundRobin"
       }

@@ -1,6 +1,7 @@
 {
   "Routes": [
     {
+      "ServiceName": "serviceone",
       "DownstreamPathTemplate": "/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
@@ -16,9 +17,16 @@
         "PUT",
         "DELETE",
         "OPTIONS"
-      ]
+      ],
+      "FileCacheOptions": {
+        "TtlSeconds": 15
+      },
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      }
     },
     {
+      "ServiceName": "servicetwo",
       "DownstreamPathTemplate": "/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
@@ -34,9 +42,16 @@
         "PUT",
         "DELETE",
         "OPTIONS"
-      ]
+      ],
+      "FileCacheOptions": {
+        "TtlSeconds": 15
+      },
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      }
     },
     {
+      "ServiceName": "servicethree",
       "DownstreamPathTemplate": "/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
@@ -52,8 +67,24 @@
         "PUT",
         "DELETE",
         "OPTIONS"
-      ]
+      ],
+      "FileCacheOptions": {
+        "TtlSeconds": 15
+      },
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      }
     }
   ],
-  "GlobalConfiguration": {}
+  "GlobalConfiguration": {
+    "RequestIdKey": "OcRequestId",
+    "DownstreamScheme": "http",
+    "ReRoutesCaseSensitive": false,
+    "UseServiceDiscovery": true,
+    "ServiceDiscoveryProvider": {
+      "Host": "servicesgateway",
+      "Port": 80,
+      "Type": "Eureka"
+    }
+  }
 }
