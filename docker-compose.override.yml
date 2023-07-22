@@ -1,6 +1,12 @@
 version: '3.6'
 
 services:
+    eureka-server:
+        environment:
+            - EUREKA_SERVER_ENABLE_SELF_PRESERVATION=false
+        ports:
+            - 8761:8761
+
     elasticsearchforloggingmicroservice:
         environment:
             - discovery.type=single-node
@@ -26,6 +32,7 @@ services:
         environment:
             - ASPNETCORE_ENVIRONMENT=Docker
             - ASPNETCORE_URLS=http://+:80
+            - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka
         ports:
             - 5256:80
         volumes:
@@ -33,11 +40,13 @@ services:
             - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
         depends_on:
             - elasticsearchforloggingmicroservice
+            - eureka-server 
 
     servicetwo:
         environment:
             - ASPNETCORE_ENVIRONMENT=Docker
             - ASPNETCORE_URLS=http://+:80
+            - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka
         ports:
             - 5258:80
         volumes:
@@ -45,11 +54,13 @@ services:
             - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
         depends_on:
             - elasticsearchforloggingmicroservice
+            - eureka-server
 
     servicethree:
         environment:
             - ASPNETCORE_ENVIRONMENT=Docker
             - ASPNETCORE_URLS=http://+:80
+            - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka
         ports:
             - 5172:80
         volumes:
@@ -57,17 +68,20 @@ services:
             - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
         depends_on:
             - elasticsearchforloggingmicroservice
+            - eureka-server
 
     servicegateway:
         environment:
             - ASPNETCORE_ENVIRONMENT=Docker
             - ASPNETCORE_URLS=http://+:80
+            - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka
         ports:
             - 5015:80
         volumes:
             - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
             - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
         depends_on:
+            - eureka-server
             - serviceone
             - servicetwo
             - servicethree
@@ -76,12 +90,14 @@ services:
         environment:
             - ASPNETCORE_ENVIRONMENT=Docker
             - ASPNETCORE_URLS=http://+:80
+            - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka
         ports:
             - 5178:80
         volumes:
             - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
             - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
         depends_on:
+            - eureka-server
             - serviceone
             - servicetwo
             - servicethree
