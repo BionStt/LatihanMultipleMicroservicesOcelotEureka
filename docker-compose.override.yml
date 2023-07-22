@@ -1,0 +1,91 @@
+version: '3.6'
+
+services:
+    elasticsearchforloggingmicroservice:
+        environment:
+            - discovery.type=single-node
+            - xpack.monitoring.enabled=true
+            - xpack.security.enabled=false
+            - xpack.watcher.enabled=false
+            - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+        ports:
+            - 9200:9200
+        volumes:
+            - elasticsearch-data:/usr/share/elasticsearch/data
+
+    kibanaforloggingmicroservice:
+        environment:
+            - ELASTICSEARCH_URL=http://elasticsearch:9200
+            - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+        ports:
+            - 5601:5601
+        depends_on:
+            - elasticsearchforloggingmicroservice
+
+    serviceone:
+        environment:
+            - ASPNETCORE_ENVIRONMENT=Docker
+            - ASPNETCORE_URLS=http://+:80
+        ports:
+            - 5256:80
+        volumes:
+            - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+            - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+        depends_on:
+            - elasticsearchforloggingmicroservice
+
+    servicetwo:
+        environment:
+            - ASPNETCORE_ENVIRONMENT=Docker
+            - ASPNETCORE_URLS=http://+:80
+        ports:
+            - 5258:80
+        volumes:
+            - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+            - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+        depends_on:
+            - elasticsearchforloggingmicroservice
+
+    servicethree:
+        environment:
+            - ASPNETCORE_ENVIRONMENT=Docker
+            - ASPNETCORE_URLS=http://+:80
+        ports:
+            - 5172:80
+        volumes:
+            - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+            - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+        depends_on:
+            - elasticsearchforloggingmicroservice
+
+    servicegateway:
+        environment:
+            - ASPNETCORE_ENVIRONMENT=Docker
+            - ASPNETCORE_URLS=http://+:80
+        ports:
+            - 5015:80
+        volumes:
+            - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+            - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+        depends_on:
+            - serviceone
+            - servicetwo
+            - servicethree
+
+    servicegatewaywithopenapi:
+        environment:
+            - ASPNETCORE_ENVIRONMENT=Docker
+            - ASPNETCORE_URLS=http://+:80
+        ports:
+            - 5178:80
+        volumes:
+            - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+            - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+        depends_on:
+            - serviceone
+            - servicetwo
+            - servicethree
+
+volumes:
+    elasticsearch-data:
+        driver: local

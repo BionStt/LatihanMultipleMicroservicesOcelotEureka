@@ -1,0 +1,48 @@
+{
+  "SwaggerEndPoints": [
+    {
+      "Key": "ServiceGatewayWithOpenAPI",
+      "TransformByOcelotConfig": false,
+      "Config": [
+        {
+          "Name": "ServiceGatewayWithOpenAPI",
+          "Version": "1.0",
+          "Url": "http://localhost:5178/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "serviceone",
+      "TransformByOcelotConfig": true,
+      "Config": [
+        {
+          "Name": "ServiceOne",
+          "Version": "1.0",
+          "Url": "http://localhost:5178/serviceone/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "servicetwo",
+      "TransformByOcelotConfig": true,
+      "Config": [
+        {
+          "Name": "ServiceTwo",
+          "Version": "1.0",
+          "Url": "http://localhost:5178/servicetwo/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "servicethree",
+      "TransformByOcelotConfig": true,
+      "Config": [
+        {
+          "Name": "ServiceThree",
+          "Version": "1.0",
+          "Url": "http://localhost:5178/servicethree/swagger/v1/swagger.json"
+        }
+      ]
+    }
+  ]
+}

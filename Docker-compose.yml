@@ -1,0 +1,78 @@
+version: '3.6'
+
+services:
+    # Elasticsearch Docker Images: https://www.docker.elastic.co/
+    elasticsearchforloggingmicroservice:
+        container_name: elasticsearchforloggingmicroservice
+        image: docker.elastic.co/elasticsearch/elasticsearch:7.9.2
+        restart: on-failure
+        hostname: elasticsearch
+        networks:
+            - common_network
+
+    kibanaforloggingmicroservice:
+        container_name: kibanaforloggingmicroservice
+        image: docker.elastic.co/kibana/kibana:7.9.2
+        restart: on-failure
+        hostname: kibana
+        networks:
+            - common_network
+  
+    serviceone:
+        container_name: serviceone
+        image: serviceone:latest
+        restart: on-failure
+        hostname: serviceone
+        build:
+            context: .
+            dockerfile: ServiceOne/Dockerfile
+        networks:
+            - common_network
+
+    servicetwo:
+        container_name: servicetwo
+        image: servicetwo:latest
+        restart: on-failure
+        hostname: servicetwo
+        build:
+            context: .
+            dockerfile: ServiceTwo/Dockerfile
+        networks:
+            - common_network
+
+    servicethree:
+        container_name: servicethree
+        image: servicethree:latest
+        restart: on-failure
+        hostname: servicethree
+        build:
+            context: .
+            dockerfile: ServiceThree/Dockerfile
+        networks:
+            - common_network
+
+    servicegateway:
+        container_name: servicegateway
+        image: servicegateway:latest
+        restart: on-failure
+        hostname: servicegateway
+        build:
+            context: .
+            dockerfile: ServiceGateway/Dockerfile
+        networks:
+            - common_network
+
+    servicegatewaywithopenapi:
+        container_name: servicegatewaywithopenapi
+        image: servicegatewaywithopenapi:latest
+        restart: on-failure
+        hostname: servicegatewaywithopenapi
+        build:
+            context: .
+            dockerfile: ServiceGatewayWithOpenAPI/Dockerfile
+        networks:
+            - common_network
+
+networks:
+    common_network:
+        driver: bridge
