@@ -5,14 +5,14 @@
       "DownstreamScheme": "http",
       "SwaggerKey": "servicetwo",
       "UseServiceDiscovery": true,
-      "ServiceName": "servicetwo",
-      //"DownstreamHostAndPorts": [
-      //  {
-      //    "Host": "localhost",
-      //    //"Host": "servicetwo",
-      //    "Port": "7105"
-      //  }
-      //],
+      //"ServiceName": "servicetwo",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          //"Host": "servicetwo",
+          "Port": "5258"
+        }
+      ],
       "UpstreamPathTemplate": "/servicetwo/{everything}",
       "UpstreamHttpMethod": [
         "GET",
@@ -27,7 +27,6 @@
         NoLoadBalancer - takes the first available service from config or service discovery.
         CookieStickySessions - uses a cookie to stick all requests to a specific server
       */
-
       "LoadBalancerOptions": {
         "Type": "RoundRobin"
       }

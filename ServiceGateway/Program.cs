@@ -21,6 +21,7 @@ using Microsoft.Extensions.Logging;
 using Ocelot.Provider.Eureka;
 using System.Configuration;
 using Steeltoe.Discovery.Client;
+using Steeltoe.Discovery.Eureka;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console().CreateBootstrapLogger();
@@ -70,6 +71,10 @@ try
 
 
     #endregion
+    // Register service discovery - Eureka
+    builder.Services.AddServiceDiscovery(o => o.UseEureka());
+
+    //builder.Services.AddSwaggerForOcelot(builder.Configuration);
 
     builder.Logging.ClearProviders().AddConsole().AddSerilog(CustomLoggerConfiguration.Configure());
 
@@ -85,7 +90,7 @@ try
             x.WithDictionaryHandle();
         });
 
-    builder.Services.AddDiscoveryClient(builder.Configuration);
+    //builder.Services.AddDiscoveryClient(builder.Configuration);
 
     builder.Services.AddHttpContextAccessor();
     builder.Services.AddRouting(options => options.LowercaseUrls = true);
@@ -101,12 +106,12 @@ try
     if (app.Environment.IsDevelopment())
     {
         app.UseSwagger();
-        //app.UseSwaggerUI();
+        app.UseSwaggerUI();
     }
     else
     {
         app.UseSwagger();
-        //app.UseSwaggerUI();
+        app.UseSwaggerUI();
     }
 
     //app.UseMiddleware<ExceptionMiddleware>();
@@ -122,7 +127,7 @@ try
         await context.Response.WriteAsync(result);
     }));
     
-    app.UseDiscoveryClient();
+    //app.UseDiscoveryClient();
 
     app.UseHttpsRedirection();
 
@@ -165,7 +170,7 @@ try
 }
 catch (Exception ex)
 {
-    Log.Fatal($"Failed to start {Assembly.GetExecutingAssembly().GetName().Name}", ex);
+    Log.Fatal($"Failed to start {Assembly.GetExecutingAssembly().GetName().Name} - {ex.Message}", ex);
 
     //Log.Fatal(ex, "Unhandled Exception");
 }

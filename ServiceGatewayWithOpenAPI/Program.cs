@@ -44,12 +44,12 @@ try
     var routes = "Routes";
     var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
-    #if DEBUG
-        routes = "Routes";
-    #else
-    routes = "Routes.prod";
-    #endif
-        ;
+    //#if DEBUG
+    //    routes = "Routes";
+    //#else
+    //routes = "Routes.prod";
+    //#endif
+    //    ;
 
     //var config = new ConfigurationBuilder()
     //    .SetBasePath(Directory.GetCurrentDirectory())
@@ -184,7 +184,7 @@ try
 }
 catch (Exception ex)
 {
-    Log.Fatal($"Failed to start {Assembly.GetExecutingAssembly().GetName().Name}", ex);
+    Log.Fatal($"Failed to start {Assembly.GetExecutingAssembly().GetName().Name} - {ex.Message}", ex);
 
     //Log.Fatal(ex, "Unhandled Exception");
 }
